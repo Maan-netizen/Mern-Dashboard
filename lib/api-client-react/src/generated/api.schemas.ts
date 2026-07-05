@@ -62,3 +62,34 @@ export interface ActivityItem {
   metadata?: ActivityItemMetadata;
 }
 
+export interface Note {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateNoteInput {
+  /** @minLength 1 */
+  title: string;
+  content?: string;
+}
+
+export interface UpdateNoteInput {
+  /** @minLength 1 */
+  title?: string;
+  content?: string;
+}
+
+export interface UpdateProfileInput {
+  /** @minLength 1 */
+  name: string;
+}
+
+export interface ChangePasswordInput {
+  currentPassword: string;
+  /** @minLength 6 */
+  newPassword: string;
+}
+

@@ -1,11 +1,14 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Route, Switch, Router as WouterRouter, Redirect } from 'wouter';
+import { Route, Switch, Router as WouterRouter, Redirect, useLocation } from 'wouter';
 import { setAuthTokenGetter } from "@workspace/api-client-react";
 
 import { Toaster } from '@/components/ui/toaster';
 import Login from '@/pages/login';
 import Register from '@/pages/register';
 import Dashboard from '@/pages/dashboard';
+import Notes from '@/pages/notes';
+import Settings from '@/pages/settings';
+import AppLayout from '@/components/layout/AppLayout';
 
 // Set up the API client auth token getter globally
 setAuthTokenGetter(() => localStorage.getItem("auth_token"));
@@ -36,14 +39,38 @@ function NotFound() {
   );
 }
 
+function RequireAuth({ children }: { children: React.ReactNode }) {
+  const [, setLocation] = useLocation();
+  const token = localStorage.getItem("auth_token");
+  if (!token) {
+    setLocation("/login");
+    return null;
+  }
+  return <>{children}</>;
+}
+
+function AuthenticatedRoutes() {
+  return (
+    <RequireAuth>
+      <AppLayout>
+        <Switch>
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/notes" component={Notes} />
+          <Route path="/settings" component={Settings} />
+          <Route component={NotFound} />
+        </Switch>
+      </AppLayout>
+    </RequireAuth>
+  );
+}
+
 function Router() {
   return (
     <Switch>
       <Route path="/" component={() => <Redirect to="/dashboard" />} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/dashboard" component={Dashboard} />
-      <Route component={NotFound} />
+      <Route component={AuthenticatedRoutes} />
     </Switch>
   );
 }

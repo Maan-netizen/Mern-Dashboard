@@ -110,3 +110,109 @@ export const GetRecentActivityResponseItem = zod.object({
 export const GetRecentActivityResponse = zod.array(GetRecentActivityResponseItem)
 
 
+/**
+ * @summary List all notes for the current user
+ */
+export const ListNotesResponseItem = zod.object({
+  "id": zod.string(),
+  "title": zod.string(),
+  "content": zod.string(),
+  "createdAt": zod.string(),
+  "updatedAt": zod.string()
+})
+export const ListNotesResponse = zod.array(ListNotesResponseItem)
+
+
+/**
+ * @summary Create a new note
+ */
+
+
+
+export const CreateNoteBody = zod.object({
+  "title": zod.string().min(1),
+  "content": zod.string().optional()
+})
+
+export const CreateNoteResponse = zod.object({
+  "id": zod.string(),
+  "title": zod.string(),
+  "content": zod.string(),
+  "createdAt": zod.string(),
+  "updatedAt": zod.string()
+})
+
+
+/**
+ * @summary Update a note
+ */
+export const UpdateNoteParams = zod.object({
+  "id": zod.coerce.string()
+})
+
+
+
+
+export const UpdateNoteBody = zod.object({
+  "title": zod.string().min(1).optional(),
+  "content": zod.string().optional()
+})
+
+export const UpdateNoteResponse = zod.object({
+  "id": zod.string(),
+  "title": zod.string(),
+  "content": zod.string(),
+  "createdAt": zod.string(),
+  "updatedAt": zod.string()
+})
+
+
+/**
+ * @summary Delete a note
+ */
+export const DeleteNoteParams = zod.object({
+  "id": zod.coerce.string()
+})
+
+export const DeleteNoteResponse = zod.object({
+  "message": zod.string()
+})
+
+
+/**
+ * @summary Update the current user's profile name
+ */
+
+
+
+export const UpdateProfileBody = zod.object({
+  "name": zod.string().min(1)
+})
+
+export const UpdateProfileResponse = zod.object({
+  "id": zod.string(),
+  "name": zod.string(),
+  "email": zod.string(),
+  "role": zod.string(),
+  "createdAt": zod.string(),
+  "lastLogin": zod.string().nullable()
+})
+
+
+/**
+ * @summary Change the current user's password
+ */
+export const changePasswordBodyNewPasswordMin = 6;
+
+
+
+export const ChangePasswordBody = zod.object({
+  "currentPassword": zod.string(),
+  "newPassword": zod.string().min(changePasswordBodyNewPasswordMin)
+})
+
+export const ChangePasswordResponse = zod.object({
+  "message": zod.string()
+})
+
+
