@@ -1,19 +1,24 @@
 ---
-name: Mongoose pre-save hook typing
-description: Async Mongoose pre-save hooks need explicit next parameter typing
+name: Mongoose async pre-save hooks — no next()
+description: Async Mongoose pre-save hooks must NOT call next(); just return the promise
 ---
 
-TypeScript infers the `next` parameter in a Mongoose pre-save hook as `SaveOptions`, which has no call signature. Fix by importing and annotating the type explicitly:
+In Mongoose v9, async pre-save hooks must not accept or call `next`. Mongoose detects the async function and awaits the returned promise itself. Calling `next()` throws `TypeError: next is not a function` at runtime.
 
 ```ts
-import mongoose, { CallbackWithoutResultAndOptionalError } from "mongoose";
+// CORRECT
+schema.pre("save", async function () {
+  if (!this.isModified("password")) return;
+  this.password = await bcrypt.hash(this.password, 12);
+});
 
-schema.pre("save", async function (next: CallbackWithoutResultAndOptionalError) {
-  // ...
-  next();
+// WRONG — crashes with "next is not a function"
+schema.pre("save", async function (next) {
+  this.password = await bcrypt.hash(this.password, 12);
+  next(); // ❌
 });
 ```
 
-**Why:** Mongoose's overloaded `pre()` types don't narrow the callback's `next` parameter to a callable type when the async overload is used.
+**Why:** Mongoose's async middleware overload does not pass `next` as a callable; it resolves on promise fulfillment. The old callback-style `next()` pattern only works in sync hooks.
 
-**How to apply:** Always annotate `next` in async pre-save hooks with `CallbackWithoutResultAndOptionalError`.
+**How to apply:** Every async pre/post hook: no `next` parameter, no `next()` call, just `return` or throw.
