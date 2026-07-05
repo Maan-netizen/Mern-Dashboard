@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
 import { useRegister } from "@workspace/api-client-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,6 +22,7 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export default function Register() {
   const [, setLocation] = useLocation();
+  const queryClient = useQueryClient();
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
@@ -35,6 +37,7 @@ export default function Register() {
     mutation: {
       onSuccess: (data) => {
         localStorage.setItem("auth_token", data.token);
+        queryClient.clear();
         toast.success("Account created", {
           description: "Welcome to Command Center.",
         });

@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
 import { useLogin } from "@workspace/api-client-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,6 +21,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function Login() {
   const [, setLocation] = useLocation();
+  const queryClient = useQueryClient();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -33,6 +35,7 @@ export default function Login() {
     mutation: {
       onSuccess: (data) => {
         localStorage.setItem("auth_token", data.token);
+        queryClient.clear();
         toast.success("Welcome back", {
           description: `Successfully signed in as ${data.user.name}`,
         });
