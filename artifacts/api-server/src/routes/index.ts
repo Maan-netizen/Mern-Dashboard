@@ -7,7 +7,6 @@ import usersRouter from "./users";
 
 const router: IRouter = Router();
 
-router.use(healthRouter);
 router.use(authRouter);
 router.use(dashboardRouter);
 router.use(notesRouter);

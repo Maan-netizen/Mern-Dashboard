@@ -3,6 +3,13 @@ import { logger } from "../lib/logger";
 
 let isConnected = false;
 
+export function isDBReady(): boolean {
+  return isConnected;
+}
+
+const MAX_RETRIES = 5;
+const INITIAL_DELAY_MS = 2000;
+
 export async function connectDB(): Promise<void> {
   if (isConnected) return;
 
@@ -21,12 +28,21 @@ export async function connectDB(): Promise<void> {
     );
   }
 
-  try {
-    await mongoose.connect(MONGODB_URI);
-    isConnected = true;
-    logger.info("MongoDB connected");
-  } catch (err) {
-    logger.error({ err }, "MongoDB connection failed");
-    throw err;
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      await mongoose.connect(MONGODB_URI);
+      isConnected = true;
+      logger.info("MongoDB connected");
+      return;
+    } catch (err) {
+      const isLast = attempt === MAX_RETRIES;
+      if (isLast) {
+        logger.error({ err }, `MongoDB connection failed after ${MAX_RETRIES} attempts — giving up`);
+        throw err;
+      }
+      const delayMs = INITIAL_DELAY_MS * Math.pow(2, attempt - 1);
+      logger.warn({ attempt, delayMs }, `MongoDB connection attempt ${attempt} failed, retrying in ${delayMs}ms`);
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    }
   }
 }
