@@ -5,7 +5,9 @@ import {
   useGetDashboardStats, 
   useGetRecentActivity,
   useLogout,
-  getGetCurrentUserQueryKey
+  getGetCurrentUserQueryKey,
+  getGetDashboardStatsQueryKey,
+  getGetRecentActivityQueryKey,
 } from "@workspace/api-client-react";
 import { format } from "date-fns";
 import { 
@@ -51,12 +53,14 @@ export default function Dashboard() {
   const { data: stats, isLoading: isLoadingStats } = useGetDashboardStats({
     query: {
       enabled: !!token,
+      queryKey: getGetDashboardStatsQueryKey(),
     }
   });
 
   const { data: activity, isLoading: isLoadingActivity } = useGetRecentActivity({
     query: {
       enabled: !!token,
+      queryKey: getGetRecentActivityQueryKey(),
     }
   });
 
