@@ -260,15 +260,30 @@ export default function Dashboard() {
               <CardDescription>Frequently used tools</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-              <Button variant="outline" className="w-full justify-start" data-testid="btn-action-reports">
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                data-testid="btn-action-reports"
+                onClick={() => toast.info("Reports", { description: "Detailed reports are coming soon." })}
+              >
                 <Activity className="h-4 w-4 mr-2 text-muted-foreground" />
                 View Detailed Reports
               </Button>
-              <Button variant="outline" className="w-full justify-start" data-testid="btn-action-users">
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                data-testid="btn-action-users"
+                onClick={() => toast.info("User Management", { description: "User management is coming soon." })}
+              >
                 <Users className="h-4 w-4 mr-2 text-muted-foreground" />
                 Manage Users
               </Button>
-              <Button variant="outline" className="w-full justify-start" data-testid="btn-action-settings">
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                data-testid="btn-action-settings"
+                onClick={() => toast.info("Security Settings", { description: "Security settings are coming soon." })}
+              >
                 <ShieldCheck className="h-4 w-4 mr-2 text-muted-foreground" />
                 Security Settings
               </Button>
