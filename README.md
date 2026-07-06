@@ -2,9 +2,23 @@
 
 👋 Developed by **Manvardhan Tripathi** — Computer Science Engineering graduate from MMMUT.  
 
-[![GitHub](https://img.shields.io/badge/GitHub-Maan--netizen-black?logo=github)](https://github.com/Maan-netizen)  
+[![GitHub](https://img.shields.io/badge/GitHub-Maan--netizen-black?logo=github)](https://github.com/Maan-netizen/Mern-Dashboard)  
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Manvardhan%20Tripathi-blue?logo=linkedin)](https://www.linkedin.com/in/manvardhantripathi)  
 [![Replit](https://img.shields.io/badge/Replit-Mern--Dashboard-orange?logo=replit)](https://replit.com/@manvardhantripa/Mern-Dashboard)  
+[![Live Demo](https://img.shields.io/badge/Dashboard-Live%20Demo-green?logo=vercel)](https://mern-dashboard--manvardhantripa.replit.app/dashboard)  
+
+---
+
+
+
+A full‑stack MERN (MongoDB, Express, React, Node.js) application showcasing secure authentication, responsive UI, and integration with MongoDB Atlas.  
+This project highlights my ability to design scalable, modern web applications and reflects my readiness for full‑stack and GenAI‑driven roles.
+
+
+---
+
+A full‑stack MERN (MongoDB, Express, React, Node.js) application showcasing secure authentication, responsive UI, and integration with MongoDB Atlas.  
+This project highlights my ability to design scalable, modern web applications and reflects my readiness for full‑stack and GenAI‑driven roles.
 
 ---
 
