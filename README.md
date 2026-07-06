@@ -70,8 +70,6 @@ This project demonstrates secure authentication, a responsive dashboard, and int
 4.npm start
 
 ---
-<img width="1912" height="897" alt="{9A4EB63C-EA16-46DA-8604-75B97A5C1E9E}" src="https://github.com/user-attachments/assets/e3bd1cd5-d515-4914-ad27-23c8c7015169" />
-
 
 ## 📖 About This Project
 
